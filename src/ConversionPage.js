@@ -74,19 +74,13 @@ function ConversionPage() {
           <span className="card-title">Converting Files...</span>
           {isConverting && progress < 100 && (
             <div className="progress">
-              <div className="determinate" style={{ width: `${progress}%` }}></div>
+              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#2196F3' }}></div>
             </div>
           )}
           {progress === 100 && (
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '200px' }}> {/* Added flex styles */}
               <p>Conversion complete!</p>
-              <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0}>
-                Download All as ZIP
-              </button>
-              <button className="btn waves-effect waves-light" style={{ marginLeft: '10px' }} onClick={() => navigate('/')}>
-                Convert More Files
-              </button>
-              <ul className="collection">
+              <ul className="collection" style={{ flexGrow: 1 }}> {/* Added flexGrow to push buttons down */}
                 {convertedFiles.map((file, index) => (
                   <li key={index} className="collection-item">
                     <div>
@@ -98,6 +92,14 @@ function ConversionPage() {
                   </li>
                 ))}
               </ul>
+              <div style={{ marginTop: 'auto' }}> {/* Pushes buttons to the bottom */}
+                <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0}>
+                  Download All as ZIP
+                </button>
+                <button className="btn waves-effect waves-light" style={{ marginLeft: '10px' }} onClick={() => navigate('/')}>
+                  Convert More Files
+                </button>
+              </div>
             </div>
           )}
         </div>

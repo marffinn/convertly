@@ -8,6 +8,7 @@ function HomePage() {
   const [isDragOver, setIsDragOver] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]); // New state for image previews
   const selectRef = useRef(null);
+  const fileInputRef = useRef(null); // Added fileInputRef
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,6 +72,10 @@ function HomePage() {
     readAndPreview(files);
   };
 
+  const handleDropAreaClick = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <div className="container narrow-container">
       <div className="card">
@@ -82,17 +87,16 @@ function HomePage() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
+            onClick={handleDropAreaClick} // Added onClick handler
           >
-            <div className="file-field input-field">
-              <div className="btn">
-                <span>File</span>
-                <input type="file" multiple onChange={handleFileChange} />
-              </div>
-              <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" placeholder="Select one or more files" />
-              </div>
-            </div>
-            <p>or drag and drop images here</p>
+            <p>Drag and drop images here</p>
+            <input
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              style={{ display: 'none' }} // Hide the input
+            />
           </div>
 
           {imagePreviews.length > 0 && (
@@ -112,7 +116,7 @@ function HomePage() {
             </select>
             <label>Output Format</label>
           </div>
-          <button className="btn waves-effect waves-light" onClick={handleConvert} disabled={selectedFiles.length === 0}>
+          <button className="btn waves-effect waves-light" style={{ width: '100%', display: 'block' }} onClick={handleConvert} disabled={selectedFiles.length === 0}>
             Convert
           </button>
         </div>

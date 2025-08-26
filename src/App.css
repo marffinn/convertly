@@ -31,6 +31,10 @@ html, body, #root {
   padding: 20px;
 }
 
+.card-content {
+  text-align: center;
+}
+
 .drop-area {
   border: 2px dashed #ccc;
   border-radius: 10px;
