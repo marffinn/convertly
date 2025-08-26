@@ -11,7 +11,7 @@ function ConversionPage() {
   const [progress, setProgress] = useState(0);
   const [isConverting, setIsConverting] = useState(false);
 
-  const convertFile = (file) => {
+  const convertFile = useCallback((file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -35,7 +35,7 @@ function ConversionPage() {
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
-  };
+  }, [format]);
 
   const convertFiles = useCallback(async () => {
     const newConvertedFiles = [];
@@ -49,7 +49,7 @@ function ConversionPage() {
       }
     }
     setConvertedFiles(newConvertedFiles);
-  }, [files]);
+  }, [files, convertFile]);
 
   useEffect(() => {
     if (files.length > 0 && !isConverting) {
