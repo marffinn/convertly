@@ -15,7 +15,7 @@ function App() {
   }, [theme]);
 
   return (
-    <Router>
+    <Router basename="/Convertly">
       <div className="app-container"> {/* Added app-container for flexbox */}
         <Header />
         <div className="content-wrapper"> {/* Added content-wrapper for main content */}
