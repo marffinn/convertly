@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -10,13 +10,6 @@ function ConversionPage() {
   const [convertedFiles, setConvertedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
   const [isConverting, setIsConverting] = useState(false);
-
-  useEffect(() => {
-    if (files.length > 0 && !isConverting) {
-      setIsConverting(true);
-      convertFiles();
-    }
-  }, [files, isConverting]);
 
   const convertFile = (file) => {
     return new Promise((resolve, reject) => {
@@ -44,7 +37,7 @@ function ConversionPage() {
     });
   };
 
-  const convertFiles = async () => {
+  const convertFiles = useCallback(async () => {
     const newConvertedFiles = [];
     for (let i = 0; i < files.length; i++) {
       try {
@@ -56,7 +49,14 @@ function ConversionPage() {
       }
     }
     setConvertedFiles(newConvertedFiles);
-  };
+  }, [files]);
+
+  useEffect(() => {
+    if (files.length > 0 && !isConverting) {
+      setIsConverting(true);
+      convertFiles();
+    }
+  }, [files, isConverting, convertFiles]);
 
   const handleDownload = async () => {
     const zip = new JSZip();

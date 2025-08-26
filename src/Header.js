@@ -5,7 +5,7 @@ import logo from './convertly.png';
 console.log('Logo imported:', logo);
 
 function Header() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { } = useContext(ThemeContext);
 
   return (
     <header className="app-header">
