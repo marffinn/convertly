@@ -6,6 +6,7 @@ import ConversionPage from './ConversionPage';
 import './App.css';
 import './dark-theme.css';
 import { ThemeContext } from './ThemeContext';
+import Footer from './Footer'; // Import Footer
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext); // Added toggleTheme back
@@ -34,6 +35,7 @@ function App() {
             </label>
           </div>
         </div>
+        <Footer /> {/* Add Footer component here */}
       </div>
     </Router>
   );

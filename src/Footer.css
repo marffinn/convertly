@@ -1,0 +1,20 @@
+.app-footer {
+  background-color: #282c34; /* Dark background for footer */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Space between text and icon */
+}
+
+.github-icon {
+  width: 24px; /* Adjust size as needed */
+  height: 24px;
+  filter: invert(100%); /* Makes icon white for dark background */
+}
