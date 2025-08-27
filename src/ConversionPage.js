@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import { Jimp } from 'jimp'; // Import Jimp as a named export
+import Jimp from 'jimp'; // Import Jimp as a default export from the main jimp package
+import plugins from '@jimp/plugins'; // Import all plugins
+
+Jimp.extend(plugins); // Extend Jimp with the plugins
 
 function ConversionPage() {
   const location = useLocation();
@@ -15,7 +18,7 @@ function ConversionPage() {
   const convertFile = useCallback((file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = async (event) => { // Made onload async
+      reader.onload = async (event) => { // This function *must* be async
         const fileName = file.name.replace(/\.[^/.]+$/, `.${format}`);
 
         if (format === 'avif') {
