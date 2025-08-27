@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/convertly/static/css/main.9ab7b272.css",
-    "main.js": "/convertly/static/js/main.887c711d.js",
+    "main.css": "/convertly/static/css/main.35667d00.css",
+    "main.js": "/convertly/static/js/main.8425b156.js",
     "static/js/453.9c4ca5d2.chunk.js": "/convertly/static/js/453.9c4ca5d2.chunk.js",
     "static/media/convertly.png": "/convertly/static/media/convertly.04535bf2266492739b30.png",
     "index.html": "/convertly/index.html",
-    "main.9ab7b272.css.map": "/convertly/static/css/main.9ab7b272.css.map",
-    "main.887c711d.js.map": "/convertly/static/js/main.887c711d.js.map",
+    "static/media/trash-icon.svg": "/convertly/static/media/trash-icon.e396efd8bde8f51e6bd3071b898857cd.svg",
+    "main.35667d00.css.map": "/convertly/static/css/main.35667d00.css.map",
+    "main.8425b156.js.map": "/convertly/static/js/main.8425b156.js.map",
     "453.9c4ca5d2.chunk.js.map": "/convertly/static/js/453.9c4ca5d2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9ab7b272.css",
-    "static/js/main.887c711d.js"
+    "static/css/main.35667d00.css",
+    "static/js/main.8425b156.js"
   ]
 }
