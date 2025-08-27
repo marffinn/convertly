@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/convertly/static/css/main.2141f457.css",
-    "main.js": "/convertly/static/js/main.3621bb1b.js",
-    "static/js/453.504c1928.chunk.js": "/convertly/static/js/453.504c1928.chunk.js",
+    "main.css": "/convertly/static/css/main.da0f8fd2.css",
+    "main.js": "/convertly/static/js/main.7f2db878.js",
+    "static/js/453.9c4ca5d2.chunk.js": "/convertly/static/js/453.9c4ca5d2.chunk.js",
     "static/media/convertly.png": "/convertly/static/media/convertly.04535bf2266492739b30.png",
     "index.html": "/convertly/index.html",
-    "main.2141f457.css.map": "/convertly/static/css/main.2141f457.css.map",
-    "main.3621bb1b.js.map": "/convertly/static/js/main.3621bb1b.js.map",
-    "453.504c1928.chunk.js.map": "/convertly/static/js/453.504c1928.chunk.js.map"
+    "main.da0f8fd2.css.map": "/convertly/static/css/main.da0f8fd2.css.map",
+    "main.7f2db878.js.map": "/convertly/static/js/main.7f2db878.js.map",
+    "453.9c4ca5d2.chunk.js.map": "/convertly/static/js/453.9c4ca5d2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2141f457.css",
-    "static/js/main.3621bb1b.js"
+    "static/css/main.da0f8fd2.css",
+    "static/js/main.7f2db878.js"
   ]
 }
