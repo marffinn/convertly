@@ -23,9 +23,14 @@ function ConversionPage() {
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
           canvas.toBlob((blob) => {
+            const isUnsupportedFormat = format === 'gif' || format === 'avif';
+            const newBlob = isUnsupportedFormat
+              ? new Blob([blob], { type: 'application/octet-stream' })
+              : blob;
+
             resolve({
               name: file.name.replace(/\.[^/.]+$/, `.${format}`),
-              blob,
+              blob: newBlob,
             });
           }, `image/${format}`);
         };
