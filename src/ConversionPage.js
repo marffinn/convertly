@@ -2,10 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import Jimp from 'jimp'; // Import Jimp as a default export from the main jimp package
-import plugins from '@jimp/plugins'; // Import all plugins
-
-Jimp.extend(plugins); // Extend Jimp with the plugins
 
 function ConversionPage() {
   const location = useLocation();
@@ -18,57 +14,26 @@ function ConversionPage() {
   const convertFile = useCallback((file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = async (event) => { // This function *must* be async
-        const fileName = file.name.replace(/\.[^/.]+$/, `.${format}`);
-
-        if (format === 'avif') {
-          // Fallback to canvas for AVIF as Jimp doesn't support it
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            canvas.toBlob((blob) => {
-              resolve({ name: fileName, blob });
-            }, `image/${format}`);
-          };
-          img.onerror = reject;
-          img.src = event.target.result;
-        } else {
-          try {
-            const image = await Jimp.read(event.target.result); // Pass data URL to Jimp.read
-            let mimeType;
-            switch (format) {
-              case 'jpeg':
-                mimeType = Jimp.MIME_JPEG;
-                break;
-              case 'png':
-                mimeType = Jimp.MIME_PNG;
-                break;
-              case 'webp':
-                mimeType = Jimp.MIME_WEBP;
-                break;
-              case 'bmp':
-                mimeType = Jimp.MIME_BMP;
-                break;
-              case 'gif':
-                mimeType = Jimp.MIME_GIF;
-                break;
-              default:
-                mimeType = Jimp.MIME_PNG; // Default to PNG
-            }
-            const outputBuffer = await image.getBufferAsync(mimeType);
-            const blob = new Blob([outputBuffer], { type: mimeType });
-            resolve({ name: fileName, blob });
-          } catch (error) {
-            reject(error);
-          }
-        }
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((blob) => {
+            resolve({
+              name: file.name.replace(/\.[^/.]+$/, `.${format}`),
+              blob,
+            });
+          }, `image/${format}`);
+        };
+        img.onerror = reject;
+        img.src = event.target.result;
       };
       reader.onerror = reject;
-      reader.readAsDataURL(file); // Read as DataURL for Jimp
+      reader.readAsDataURL(file);
     });
   }, [format]);
 
