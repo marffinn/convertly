@@ -9,7 +9,9 @@ A simple and intuitive web-based image converter built with React. Convert your 
 -   **Batch Conversion:** Convert multiple images at once.
 -   **Individual and Batch Download:** Download converted images individually or all at once as a ZIP archive.
 -   **Responsive Design:** Works seamlessly across different devices.
--   **Dark Mode:** Enjoy a comfortable viewing experience with the default dark theme.
+    -   **Dark Mode:** Enjoy a comfortable viewing experience with the default dark theme.
+
+![Screenshot of Convertly](public/screenshot.png)
 
 ## Installation
 

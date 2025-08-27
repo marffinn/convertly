@@ -11,18 +11,6 @@ function HomePage() {
   const fileInputRef = useRef(null); // Added fileInputRef
   const navigate = useNavigate();
 
-  // New state for custom dropdown
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
-  const handleOptionClick = (formatOption) => {
-    setOutputFormat(formatOption);
-    setIsDropdownOpen(false);
-  };
-
   const readAndPreview = (files) => {
     const newPreviews = [];
     const newFiles = [];
@@ -89,6 +77,12 @@ function HomePage() {
     fileInputRef.current.click();
   };
 
+  const handleFormatSelect = (format) => {
+    setOutputFormat(format);
+  };
+
+  const formats = ['png', 'jpeg', 'webp', 'avif', 'bmp', 'gif'];
+
   return (
     <div className="container narrow-container">
       <div className="card">
@@ -125,23 +119,22 @@ function HomePage() {
             </div>
           )}
 
-          <div className="custom-dropdown-wrapper">
-            <div className="custom-dropdown-selected" onClick={toggleDropdown}>
-              {outputFormat.toUpperCase()}
-            </div>
-            {isDropdownOpen && (
-              <ul className="custom-dropdown-list">
-                {['png', 'jpeg', 'webp', 'avif', 'bmp', 'gif'].map((formatOption) => (
-                  <li key={formatOption} onClick={() => handleOptionClick(formatOption)}>
-                    {formatOption.toUpperCase()}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <label className="custom-dropdown-label">Output Format</label>
+          <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <p style={{ width: '100%', textAlign: 'center' }}>Select Output Format:</p>
+            {formats.map((fmt) => (
+              <button
+                key={fmt}
+                className={`btn ${outputFormat === fmt ? 'selected-format' : ''}`}
+                onClick={() => handleFormatSelect(fmt)}
+                style={{ margin: '5px' }}
+              >
+                {fmt.toUpperCase()}
+              </button>
+            ))}
           </div>
-          <button className="btn waves-effect waves-light" style={{ width: '100%', display: 'block' }} onClick={handleConvert} disabled={selectedFiles.length === 0}>
-            Convert
+
+          <button className="button" onClick={handleConvert} disabled={selectedFiles.length === 0}>
+            <span className="button__text">Convert</span>
           </button>
         </div>
       </div>

@@ -88,6 +88,86 @@ html, body, #root {
   margin-left: auto;
 }
 
+.btn {
+  padding: 0.8em 1.2em; /* Increased padding for taller button */
+  background-color: #6200EE; /* Deep Purple */
+  color: white;
+  border-radius: 25px; /* More rounded shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.btn:hover {
+  background-color: #3700B3; /* Darker purple on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+}
+
+.btn.selected-format {
+  background-color: #FF4081; /* Bright Pink for selected format */
+  color: white; /* White text for contrast */
+  border: 2px solid #C51162; /* Darker pink border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Distinct shadow */
+}
+
+.btn.selected-format:hover {
+  background-color: #C51162; /* Darker pink on hover */
+  color: white;
+}
+
+/* CodePen Button Styles */
+.button {
+  --button-background: #202020;
+  --button-color: #fff;
+  --button-icon-color: #fff;
+  --button-hover-background: #333;
+  --button-active-background: #111;
+  --button-border-radius: 8px;
+  --button-padding: 12px 24px;
+  --button-font-size: 16px;
+  --button-font-weight: 600;
+  --button-gap: 8px;
+  --button-transition-duration: 0.2s;
+  --button-transition-timing-function: ease-in-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+  padding: var(--button-padding);
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-background);
+  color: var(--button-color);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  cursor: pointer;
+  transition: background-color var(--button-transition-duration) var(--button-transition-timing-function);
+  width: 100%; /* Make button full width */
+}
+
+.button:hover {
+  background-color: var(--button-hover-background);
+}
+
+.button:active {
+  background-color: var(--button-active-background);
+}
+
+.button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--button-icon-color);
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 10px;
