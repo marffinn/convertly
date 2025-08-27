@@ -1,21 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import M from 'materialize-css';
+
+import './CustomDropdown.css'; // Import custom dropdown styles
 
 function HomePage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [outputFormat, setOutputFormat] = useState('png');
   const [isDragOver, setIsDragOver] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]); // New state for image previews
-  const selectRef = useRef(null);
   const fileInputRef = useRef(null); // Added fileInputRef
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (selectRef.current) {
-      M.FormSelect.init(selectRef.current);
-    }
-  }, []);
+  // New state for custom dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleOptionClick = (formatOption) => {
+    setOutputFormat(formatOption);
+    setIsDropdownOpen(false);
+  };
 
   const readAndPreview = (files) => {
     const previews = [];
@@ -39,9 +45,7 @@ function HomePage() {
     readAndPreview(files);
   };
 
-  const handleFormatChange = (event) => {
-    setOutputFormat(event.target.value);
-  };
+  
 
   const handleConvert = () => {
     if (selectedFiles.length > 0) {
@@ -107,16 +111,20 @@ function HomePage() {
             </div>
           )}
 
-          <div className="input-field">
-            <select ref={selectRef} value={outputFormat} onChange={handleFormatChange}>
-              <option value="png">PNG</option>
-              <option value="jpeg">JPEG</option>
-              <option value="webp">WebP</option>
-              <option value="avif">AVIF</option>
-              <option value="bmp">BMP</option>
-              <option value="gif">GIF</option>
-            </select>
-            <label>Output Format</label>
+          <div className="custom-dropdown-wrapper">
+            <div className="custom-dropdown-selected" onClick={toggleDropdown}>
+              {outputFormat.toUpperCase()}
+            </div>
+            {isDropdownOpen && (
+              <ul className="custom-dropdown-list">
+                {['png', 'jpeg', 'webp', 'avif', 'bmp', 'gif'].map((formatOption) => (
+                  <li key={formatOption} onClick={() => handleOptionClick(formatOption)}>
+                    {formatOption.toUpperCase()}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <label className="custom-dropdown-label">Output Format</label>
           </div>
           <button className="btn waves-effect waves-light" style={{ width: '100%', display: 'block' }} onClick={handleConvert} disabled={selectedFiles.length === 0}>
             Convert
