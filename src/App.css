@@ -84,6 +84,10 @@ html, body, #root {
   box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.25);
 }
 
+.collection-item .secondary-content {
+  margin-left: auto;
+}
+
 @media (max-width: 600px) {
   .card {
     padding: 10px;

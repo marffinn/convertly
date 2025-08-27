@@ -27,10 +27,13 @@ function ConversionPage() {
             const newBlob = isUnsupportedFormat
               ? new Blob([blob], { type: 'application/octet-stream' })
               : blob;
+            
+            const thumbnailUrl = URL.createObjectURL(newBlob);
 
             resolve({
               name: file.name.replace(/\.[^/.]+$/, `.${format}`),
               blob: newBlob,
+              thumbnail: thumbnailUrl,
             });
           }, `image/${format}`);
         };
@@ -61,7 +64,12 @@ function ConversionPage() {
       setIsConverting(true);
       convertFiles();
     }
-  }, [files, isConverting, convertFiles]);
+
+    // Cleanup function to revoke object URLs
+    return () => {
+      convertedFiles.forEach(file => URL.revokeObjectURL(file.thumbnail));
+    };
+  }, [files, isConverting, convertFiles, convertedFiles]);
 
   const handleDownload = async () => {
     const zip = new JSZip();
@@ -88,7 +96,8 @@ function ConversionPage() {
               <ul className="collection" style={{ flexGrow: 1 }}> {/* Added flexGrow to push buttons down */}
                 {convertedFiles.map((file, index) => (
                   <li key={index} className="collection-item">
-                    <div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <img src={file.thumbnail} alt={file.name} style={{ width: '50px', height: '50px', marginRight: '10px' }} />
                       {file.name}
                       <a href="#!" className="secondary-content" onClick={() => saveAs(file.blob, file.name)}>
                         <i className="material-icons">file_download</i>
