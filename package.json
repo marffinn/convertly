@@ -1,5 +1,5 @@
 {
-  "name": "image-converter",
+  "name": "convertly",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://marffinn.github.io/convertly",
@@ -9,6 +9,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "file-saver": "^2.0.5",
+    "jimp": "^1.6.0",
     "jszip": "^3.10.1",
     "materialize-css": "^1.0.0",
     "react": "^19.1.1",
@@ -23,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -r git@github.com:marffinn/Convertly.git"
+    "deploy": "gh-pages -d build -r git@github.com:marffinn/convertly.git"
   },
   "eslintConfig": {
     "extends": [

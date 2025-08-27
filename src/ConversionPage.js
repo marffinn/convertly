@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { Jimp } from 'jimp'; // Import Jimp as a named export
 
 function ConversionPage() {
   const location = useLocation();
@@ -14,26 +15,57 @@ function ConversionPage() {
   const convertFile = useCallback((file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          canvas.toBlob((blob) => {
-            resolve({
-              name: file.name.replace(/\.[^/.]+$/, `.${format}`),
-              blob,
-            });
-          }, `image/${format}`);
-        };
-        img.onerror = reject;
-        img.src = event.target.result;
+      reader.onload = async (event) => { // Made onload async
+        const fileName = file.name.replace(/\.[^/.]+$/, `.${format}`);
+
+        if (format === 'avif') {
+          // Fallback to canvas for AVIF as Jimp doesn't support it
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob((blob) => {
+              resolve({ name: fileName, blob });
+            }, `image/${format}`);
+          };
+          img.onerror = reject;
+          img.src = event.target.result;
+        } else {
+          try {
+            const image = await Jimp.read(event.target.result); // Pass data URL to Jimp.read
+            let mimeType;
+            switch (format) {
+              case 'jpeg':
+                mimeType = Jimp.MIME_JPEG;
+                break;
+              case 'png':
+                mimeType = Jimp.MIME_PNG;
+                break;
+              case 'webp':
+                mimeType = Jimp.MIME_WEBP;
+                break;
+              case 'bmp':
+                mimeType = Jimp.MIME_BMP;
+                break;
+              case 'gif':
+                mimeType = Jimp.MIME_GIF;
+                break;
+              default:
+                mimeType = Jimp.MIME_PNG; // Default to PNG
+            }
+            const outputBuffer = await image.getBufferAsync(mimeType);
+            const blob = new Blob([outputBuffer], { type: mimeType });
+            resolve({ name: fileName, blob });
+          } catch (error) {
+            reject(error);
+          }
+        }
       };
       reader.onerror = reject;
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Read as DataURL for Jimp
     });
   }, [format]);
 
@@ -74,7 +106,7 @@ function ConversionPage() {
           <span className="card-title">Converting Files...</span>
           {isConverting && progress < 100 && (
             <div className="progress">
-              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#2196F3' }}></div>
+              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#646cff' }}></div>
             </div>
           )}
           {progress === 100 && (
@@ -92,11 +124,11 @@ function ConversionPage() {
                   </li>
                 ))}
               </ul>
-              <div style={{ marginTop: 'auto' }}> {/* Pushes buttons to the bottom */}
-                <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0}>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}> {/* Pushes buttons to the bottom and adds spacing */}
+                <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0} style={{ width: '100%' }}>
                   Download All as ZIP
                 </button>
-                <button className="btn waves-effect waves-light" style={{ marginLeft: '10px' }} onClick={() => navigate('/')}>
+                <button className="btn waves-effect waves-light" onClick={() => navigate('/')} style={{ width: '100%' }}>
                   Convert More Files
                 </button>
               </div>

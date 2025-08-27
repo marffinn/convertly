@@ -20,6 +20,7 @@ html, body, #root {
 
 .container {
   margin-top: 50px;
+  border-radius: 10px;
 }
 
 .narrow-container {
