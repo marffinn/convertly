@@ -46,7 +46,7 @@ To run this project locally, follow these steps:
 
 This application is automatically deployed to GitHub Pages using GitHub Actions whenever changes are pushed to the `master` branch.
 
-You can access the live application here: [https://marffinn.github.io/Convertly/](https://marffinn.github.io/Convertly/)
+You can access the live application here: [https://marffinn.github.io/convertly/](https://marffinn.github.io/convertly/)
 
 ## Available Scripts
 

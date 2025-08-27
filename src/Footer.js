@@ -9,7 +9,7 @@ function Footer() {
       <div className="container footer-content">
         <p>&copy; {new Date().getFullYear()} Convertly. All rights reserved.</p>
         <a href={githubRepoUrl} target="_blank" rel="noopener noreferrer">
-          <img src="/github-mark-white.svg" alt="GitHub" className="github-icon" />
+          <img src="/github-mark.svg" alt="GitHub" className="github-icon" />
         </a>
       </div>
     </footer>

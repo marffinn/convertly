@@ -86,8 +86,11 @@ function ConversionPage() {
         <div className="card-content">
           <span className="card-title">Converting Files...</span>
           {isConverting && progress < 100 && (
-            <div className="progress">
-              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#646cff' }}></div>
+            <div>
+              <div className="progress">
+                <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#646cff' }}></div>
+              </div>
+              <span style={{ textAlign: 'center', display: 'block' }}>{`${Math.round(progress)}%`}</span>
             </div>
           )}
           {progress === 100 && (
