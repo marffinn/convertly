@@ -89,83 +89,65 @@ html, body, #root {
 }
 
 .btn {
-  padding: 0.8em 1.2em; /* Increased padding for taller button */
-  background-color: #6200EE; /* Deep Purple */
+  padding: 0.8em 1.5em; /* Slightly more horizontal padding */
+  background-color: #4CAF50; /* Green for default */
   color: white;
-  border-radius: 25px; /* More rounded shape */
+  border: 2px solid #388E3C; /* Darker green border */
+  border-radius: 8px; /* Less rounded, more modern */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background-color: #3700B3; /* Darker purple on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+  background-color: #388E3C; /* Darker green on hover */
+  border-color: #1B5E20; /* Even darker green border on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn.selected-format {
-  background-color: #FF4081; /* Bright Pink for selected format */
-  color: white; /* White text for contrast */
-  border: 2px solid #C51162; /* Darker pink border */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Distinct shadow */
+  background-color: #2196F3; /* Blue for selected */
+  color: white;
+  border: 2px solid #1976D2; /* Darker blue border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn.selected-format:hover {
-  background-color: #C51162; /* Darker pink on hover */
-  color: white;
+  background-color: #1976D2; /* Darker blue on hover */
+  border-color: #0D47A1; /* Even darker blue border on ahover */
 }
 
 /* CodePen Button Styles */
 .button {
-  --button-background: #202020;
-  --button-color: #fff;
-  --button-icon-color: #fff;
-  --button-hover-background: #333;
-  --button-active-background: #111;
-  --button-border-radius: 8px;
-  --button-padding: 12px 24px;
-  --button-font-size: 16px;
-  --button-font-weight: 600;
-  --button-gap: 8px;
-  --button-transition-duration: 0.2s;
-  --button-transition-timing-function: ease-in-out;
-
+  --background: #275efe;
+  --rectangle: #184fee;
+  --text: #fff;
+  --shadow: rgba(10, 22, 50, .24);
   display: flex;
-  align-items: center;
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--background);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px -1px var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+  padding: 16px 40px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 28px;
+  color: var(--text);
   justify-content: center;
-  gap: var(--button-gap);
-  padding: var(--button-padding);
-  border: none;
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-background);
-  color: var(--button-color);
-  font-size: var(--button-font-size);
-  font-weight: var(--button-font-weight);
-  cursor: pointer;
-  transition: background-color var(--button-transition-duration) var(--button-transition-timing-function);
-  width: 100%; /* Make button full width */
-}
-
-.button:hover {
-  background-color: var(--button-hover-background);
+  align-items: center;
+  width: 100%;
+  cursor: pointer; /* Ensure cursor is pointer */
+  border: none; /* Remove default button border */
 }
 
 .button:active {
-  background-color: var(--button-active-background);
-}
-
-.button__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button__icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--button-icon-color);
+  transform: scale(.95);
+  box-shadow: 0 1px 4px -1px var(--shadow);
 }
 
 @media (max-width: 600px) {

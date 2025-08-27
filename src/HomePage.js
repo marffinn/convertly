@@ -87,7 +87,7 @@ function HomePage() {
     <div className="container narrow-container">
       <div className="card">
         <div className="card-content">
-          <span className="card-title" style={{ display: 'block', textAlign: 'center' }}>Image Converter</span>
+          
           <div
             className={`drop-area ${isDragOver ? 'drag-over' : ''}`}
             onDragEnter={handleDragEnter}
@@ -134,7 +134,7 @@ function HomePage() {
           </div>
 
           <button className="button" onClick={handleConvert} disabled={selectedFiles.length === 0}>
-            <span className="button__text">Convert</span>
+            Convert
           </button>
         </div>
       </div>
