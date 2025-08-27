@@ -80,7 +80,7 @@ function HomePage() {
     <div className="container narrow-container">
       <div className="card">
         <div className="card-content">
-          <span className="card-title">Image Converter</span>
+          <span className="card-title" style={{ display: 'block', textAlign: 'center' }}>Image Converter</span>
           <div
             className={`drop-area ${isDragOver ? 'drag-over' : ''}`}
             onDragEnter={handleDragEnter}
@@ -113,6 +113,8 @@ function HomePage() {
               <option value="jpeg">JPEG</option>
               <option value="webp">WebP</option>
               <option value="avif">AVIF</option>
+              <option value="bmp">BMP</option>
+              <option value="gif">GIF</option>
             </select>
             <label>Output Format</label>
           </div>

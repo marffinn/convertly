@@ -74,7 +74,7 @@ function ConversionPage() {
           <span className="card-title">Converting Files...</span>
           {isConverting && progress < 100 && (
             <div className="progress">
-              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#2196F3' }}></div>
+              <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#646cff' }}></div>
             </div>
           )}
           {progress === 100 && (
@@ -92,11 +92,11 @@ function ConversionPage() {
                   </li>
                 ))}
               </ul>
-              <div style={{ marginTop: 'auto' }}> {/* Pushes buttons to the bottom */}
-                <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0}>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}> {/* Pushes buttons to the bottom and adds spacing */}
+                <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0} style={{ width: '100%' }}>
                   Download All as ZIP
                 </button>
-                <button className="btn waves-effect waves-light" style={{ marginLeft: '10px' }} onClick={() => navigate('/')}>
+                <button className="btn waves-effect waves-light" onClick={() => navigate('/')} style={{ width: '100%' }}>
                   Convert More Files
                 </button>
               </div>
