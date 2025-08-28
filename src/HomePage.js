@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { decodeTga } from '@lunapaint/tga-codec';
 
 import { ReactComponent as TrashIcon } from './trash-icon.svg';
+import FormatDropdown from './FormatDropdown';
 
 function HomePage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -143,17 +144,11 @@ function HomePage() {
           )}
 
           <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <p style={{ width: '100%', textAlign: 'center' }}>Select Output Format:</p>
-            {formats.map((fmt) => (
-              <button
-                key={fmt}
-                className={`btn ${outputFormat === fmt ? 'selected-format' : ''}`}
-                onClick={() => handleFormatSelect(fmt)}
-                style={{ margin: '5px' }}
-              >
-                {fmt.toUpperCase()}
-              </button>
-            ))}
+            <FormatDropdown
+              formats={formats}
+              selectedFormat={outputFormat}
+              onSelectFormat={handleFormatSelect}
+            />
           </div>
 
           <button className="button" onClick={handleConvert} disabled={selectedFiles.length === 0}>

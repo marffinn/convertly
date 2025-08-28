@@ -1,0 +1,77 @@
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 0 auto;
+  margin-left: auto;
+}
+
+.dropdown-toggle {
+  background-color: #4CAF50; /* Example background */
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background-color: #45a049; /* Darker on hover */
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Dark mode adjustments */
+body.dark .dropdown-toggle {
+  background-color: #646cff; /* Dark mode button color */
+}
+
+body.dark .dropdown-toggle:hover {
+  background-color: #535bf2; /* Darker on hover */
+}
+
+body.dark .dropdown-menu {
+  background-color: #333; /* Dark mode menu background */
+}
+
+body.dark .dropdown-menu a {
+  color: white; /* Dark mode text color */
+}
+
+body.dark .dropdown-menu a:hover {
+  background-color: #555; /* Dark mode hover background */
+}

@@ -9,7 +9,7 @@ import { ThemeContext } from './ThemeContext';
 import Footer from './Footer';
 
 function App() {
-  const { theme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     document.body.className = theme;
@@ -24,6 +24,16 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/convert" element={<ConversionPage />} />
           </Routes>
+        </div>
+        <div className="theme-switch-bottom-container">
+          <div className="switch">
+            <label>
+              Light
+              <input type="checkbox" onChange={toggleTheme} checked={theme === 'dark'} />
+              <span className="lever"></span>
+              Dark
+            </label>
+          </div>
         </div>
         <Footer />
       </div>
