@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 
 function Footer() {
-  const githubRepoUrl = 'https://github.com/marffinn/Convertly'; // Replace with your actual GitHub repo URL
+  const githubRepoUrl = 'https://github.com/marffinn/Convertly';
 
   return (
     <footer className="app-footer">

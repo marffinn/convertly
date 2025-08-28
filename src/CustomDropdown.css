@@ -1,4 +1,3 @@
-/* General styles for the custom dropdown */
 .custom-dropdown-wrapper {
   position: relative;
   width: 100%;
@@ -6,26 +5,25 @@
   font-family: 'Lato', Calibri, Arial, sans-serif;
   font-size: 1em;
   color: #6a6a6a;
-  /* Removed border from wrapper */
   border-radius: 5px;
 }
 
 .custom-dropdown-selected {
   width: 100%;
-  padding: 15px 15px; /* Increased padding */
-  border: 1px solid #ddd; /* Lighter, subtle border */
+  padding: 15px 15px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #fdfdfd; /* Very light background */
+  background-color: #fdfdfd;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: none; /* Removed shadow */
-  color: #333; /* Darker text color */
+  box-shadow: none;
+  color: #333;
 }
 
 .custom-dropdown-selected::after {
-  content: '\25BC'; /* Down arrow */
+  content: '\25BC';
   font-size: 0.8em;
   color: #6a6a6a;
 }
@@ -38,14 +36,14 @@
   list-style: none;
   padding: 0;
   margin: 5px 0 0 0;
-  border: 1px solid #ddd; /* Lighter, subtle border */
+  border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #fdfdfd; /* Very light background */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for dropdown list */
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1000;
-  max-height: 200px; /* Limit height for scrollability */
+  max-height: 200px;
   overflow-y: auto;
-  color: #333; /* Darker text color */
+  color: #333;
 }
 
 .custom-dropdown-list li {
@@ -54,7 +52,7 @@
 }
 
 .custom-dropdown-list li:hover {
-  background-color: #e0e0e0; /* Slightly darker gray on hover */
+  background-color: #e0e0e0;
 }
 
 .custom-dropdown-label {
@@ -68,11 +66,10 @@
   pointer-events: none;
 }
 
-/* Dark theme adjustments */
 .dark .custom-dropdown-selected,
 .dark .custom-dropdown-list {
-  background-color: #333; /* Darker background for dark theme */
-  border-color: #555; /* Darker border for dark theme */
+  background-color: #333;
+  border-color: #555;
   color: #ffffff;
 }
 
@@ -85,10 +82,10 @@
 }
 
 .dark .custom-dropdown-label {
-  background-color: #333; /* Darker background for dark theme */
+  background-color: #333;
   color: #ffffff;
 }
 
 .dark .custom-dropdown-wrapper {
-  /* Removed border from wrapper for dark theme */
+
 }

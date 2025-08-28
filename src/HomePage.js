@@ -8,8 +8,8 @@ function HomePage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [outputFormat, setOutputFormat] = useState('png');
   const [isDragOver, setIsDragOver] = useState(false);
-  const [imagePreviews, setImagePreviews] = useState([]); // New state for image previews
-  const fileInputRef = useRef(null); // Added fileInputRef
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   const readAndPreview = (files) => {
@@ -36,7 +36,7 @@ function HomePage() {
               setSelectedFiles(prev => [...prev, ...newFiles]);
             }
           } catch (error) {
-            console.error('Error decoding TGA:', error);
+            console.error(`Error decoding TGA:`, error);
           }
         };
         reader.readAsArrayBuffer(file);
@@ -52,7 +52,7 @@ function HomePage() {
         };
         reader.readAsDataURL(file);
       } else {
-        // handle non-image files if needed
+
       }
     });
   };
@@ -116,7 +116,7 @@ function HomePage() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={handleDropAreaClick} // Added onClick handler
+            onClick={handleDropAreaClick}
           >
             <p>Drag and drop images here</p>
             <input
@@ -124,7 +124,7 @@ function HomePage() {
               multiple
               onChange={handleFileChange}
               ref={fileInputRef}
-              style={{ display: 'none' }} // Hide the input
+              style={{ display: 'none' }}
               accept="image/*,.tga"
             />
           </div>
@@ -133,7 +133,7 @@ function HomePage() {
             <div className="image-previews" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '20px', marginBottom: '20px' }}>
               {imagePreviews.map((preview) => (
                 <div key={preview.id} style={{ position: 'relative' }}>
-                  <img src={preview.src} alt={`preview-${preview.id}`} style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }} /> {/* Reverted width and height to 100px */}
+                  <img src={preview.src} alt={`preview-${preview.id}`} style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }} />
                   <button onClick={() => handleRemoveFile(preview.id)} style={{ position: 'absolute', top: '5px', right: '5px', background: 'rgba(0,0,0,0.5)', color: 'white', border: 'none', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                     <TrashIcon style={{ width: '15px', height: '15px' }} />
                   </button>

@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-
-
 const tgaPlaceholder = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCAySDZhMiAyIDAgMCAwLTIgMnYxNmEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJWOGwxLTZ6Ii8+PHBhdGggZD0iTTE0IDJWMjZoMmwxLTYiLz48L3N2Zz4=';
 
 const shortenFilename = (name, maxLength = 20) => {
@@ -33,10 +31,10 @@ function ConversionPage() {
       convertedFiles.forEach((_, index) => {
         setTimeout(() => {
           setVisibleItems((prev) => [...prev, index]);
-        }, index * 100); // Stagger by 100ms
+        }, index * 100);
       });
     } else if (progress < 100) {
-      setVisibleItems([]); // Reset when not complete
+      setVisibleItems([]);
     }
   }, [progress, convertedFiles]);
 
@@ -44,27 +42,27 @@ function ConversionPage() {
     if (progress === 100 && contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight + 'px');
     } else if (progress < 100) {
-      setContentHeight('auto'); // Reset height when not complete
+      setContentHeight('auto');
     }
   }, [progress]);
 
   const encodeTga = (imageData) => {
     const { width, height, data } = imageData;
     const header = new Uint8Array(18);
-    header[2] = 2; // Uncompressed true-color
+    header[2] = 2;
     header[12] = width & 0xFF;
     header[13] = (width >> 8) & 0xFF;
     header[14] = height & 0xFF;
     header[15] = (height >> 8) & 0xFF;
-    header[16] = 32; // 32 bits per pixel
-    header[17] = 40; // 8 bits of alpha and top-left origin
+    header[16] = 32;
+    header[17] = 40;
 
     const pixelData = new Uint8Array(width * height * 4);
     for (let i = 0; i < data.length; i += 4) {
-      pixelData[i] = data[i + 2]; // Blue
-      pixelData[i + 1] = data[i + 1]; // Green
-      pixelData[i + 2] = data[i]; // Red
-      pixelData[i + 3] = data[i + 3]; // Alpha
+      pixelData[i] = data[i + 2];
+      pixelData[i + 1] = data[i + 1];
+      pixelData[i + 2] = data[i];
+      pixelData[i + 3] = data[i + 3];
     }
 
     const tgaData = new Uint8Array(header.length + pixelData.length);
@@ -140,7 +138,6 @@ function ConversionPage() {
       convertFiles();
     }
 
-    // Cleanup function to revoke object URLs
     return () => {
       convertedFiles.forEach(file => {
         if (file.thumbnail !== tgaPlaceholder) {
@@ -148,7 +145,7 @@ function ConversionPage() {
         }
       });
     };
-  }, [files, isConverting, convertFiles]);
+  }, [files, isConverting, convertFiles, convertedFiles]);
 
   const handleDownload = async () => {
     const zip = new JSZip();
@@ -174,9 +171,9 @@ function ConversionPage() {
             </div>
           )}
           {progress === 100 && (
-            <div ref={contentRef} className="conversion-complete" style={{ display: 'flex', flexDirection: 'column', maxHeight: contentHeight }}> {/* Added ref and dynamic maxHeight */}
+            <div ref={contentRef} className="conversion-complete" style={{ display: 'flex', flexDirection: 'column', maxHeight: contentHeight }}>
               <p>Conversion complete!</p>
-              <ul className="collection" style={{ flexGrow: 1 }}> {/* Added flexGrow to push buttons down */}
+              <ul className="collection" style={{ flexGrow: 1 }}>
                 {convertedFiles.map((file, index) => (
                   <li key={index} className={`collection-item ${visibleItems.includes(index) ? 'fade-in' : ''}`}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -191,7 +188,7 @@ function ConversionPage() {
                   </li>
                 ))}
               </ul>
-              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}> {/* Pushes buttons to the bottom and adds spacing */}
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0} style={{ width: '100%', backgroundColor: '#2196F3' }}>
                   Download All as ZIP
                 </button>

@@ -6,10 +6,10 @@ import ConversionPage from './ConversionPage';
 import './App.css';
 import './dark-theme.css';
 import { ThemeContext } from './ThemeContext';
-import Footer from './Footer'; // Import Footer
+import Footer from './Footer';
 
 function App() {
-  const { theme } = useContext(ThemeContext); // Removed toggleTheme as it's not used here anymore
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     document.body.className = theme;
@@ -17,15 +17,15 @@ function App() {
 
   return (
     <Router basename="/Convertly">
-      <div className="app-container"> {/* Added app-container for flexbox */}
+      <div className="app-container">
         <Header />
-        <div className="content-wrapper"> {/* Added content-wrapper for main content */}
+        <div className="content-wrapper">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/convert" element={<ConversionPage />} />
           </Routes>
         </div>
-        <Footer /> {/* Add Footer component here */}
+        <Footer />
       </div>
     </Router>
   );

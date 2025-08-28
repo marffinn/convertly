@@ -1,21 +1,20 @@
-
 .app-header {
   padding: 10px 0;
 }
 
 .header-content {
   display: flex;
-  justify-content: space-between; /* Pushes logo to left and switcher to right */
+  justify-content: space-between;
   align-items: center;
 }
 
 .logo {
-  height: 80px; /* Made bigger */
-  margin-top: 40px; /* Increased top margin for more separation */
+  height: 80px;
+  margin-top: 40px;
 }
 
 .switch-wrapper {
   display: flex;
   align-items: center;
-  margin-top: 40px; /* Align with logo's top margin */
+  margin-top: 40px;
 }
