@@ -133,7 +133,7 @@ function HomePage() {
             <div className="image-previews" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '20px', marginBottom: '20px' }}>
               {imagePreviews.map((preview) => (
                 <div key={preview.id} style={{ position: 'relative' }}>
-                  <img src={preview.src} alt={`preview-${preview.id}`} style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }} />
+                  <img src={preview.src} alt={`preview-${preview.id}`} style={{ width: '100px', height: '100px', objectFit: 'cover', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '20px' }} /> {/* Reverted width and height to 100px */}
                   <button onClick={() => handleRemoveFile(preview.id)} style={{ position: 'absolute', top: '5px', right: '5px', background: 'rgba(0,0,0,0.5)', color: 'white', border: 'none', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                     <TrashIcon style={{ width: '15px', height: '15px' }} />
                   </button>

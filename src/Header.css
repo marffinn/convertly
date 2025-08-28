@@ -5,11 +5,17 @@
 
 .header-content {
   display: flex;
-  justify-content: center; /* Centered horizontally */
+  justify-content: space-between; /* Pushes logo to left and switcher to right */
   align-items: center;
 }
 
 .logo {
   height: 80px; /* Made bigger */
   margin-top: 40px; /* Increased top margin for more separation */
+}
+
+.switch-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 40px; /* Align with logo's top margin */
 }

@@ -35,6 +35,8 @@ html, body, #root {
 
 .card-content {
   text-align: center;
+  transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out; /* Added transition for shrink/fade */
+  overflow: hidden; /* Added overflow for shrink/fade */
 }
 
 .drop-area {
@@ -45,6 +47,10 @@ html, body, #root {
   margin-bottom: 20px;
   width: 100%; /* Same width as container */
   height: 150px; /* Less tall */
+  display: flex; /* Added for centering */
+  justify-content: center; /* Added for horizontal centering */
+  align-items: center; /* Added for vertical centering */
+  color: #1a1a1a; /* Darker grey text color */
 }
 
 .drop-area.drag-over {
@@ -141,8 +147,8 @@ html, body, #root {
   justify-content: center;
   align-items: center;
   width: 100%;
-  cursor: pointer; /* Ensure cursor is pointer */
-  border: none; /* Remove default button border */
+  cursor: pointer;
+  border: none;
 }
 
 .button:active {
@@ -164,4 +170,35 @@ html, body, #root {
     display: flex;
     justify-content: center;
   }
+}
+
+/* Shrink and Fade Animation Styles */
+.conversion-progress {
+  opacity: 1;
+  max-height: 1000px; /* Adjust as needed */
+}
+
+.conversion-complete {
+  opacity: 0;
+  max-height: 0;
+}
+
+.card-content.show-complete .conversion-progress {
+  opacity: 0;
+  max-height: 0;
+}
+
+.card-content.show-complete .conversion-complete {
+  opacity: 1;
+  max-height: 1000px; /* Adjust as needed */
+}
+
+/* Staggered Fade-in for List Items */
+.collection-item {
+  opacity: 0;
+}
+
+.collection-item.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
 }

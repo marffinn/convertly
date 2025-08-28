@@ -1,9 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-const tgaPlaceholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTkgMTJIMTUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTkgOUgxNSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNOSA2SDE1IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMy45OTk5IDE4LjVMMTcuNSAyMkwyMSAxOC41IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNy41IDE0VjIxLjUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2EtbGluZWNhcD0icm91bmQiIHN0cm9rZS1maW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE3IDguNVYzSDRWMjFIMTEiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==';
+
+
+const tgaPlaceholder = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCAySDZhMiAyIDAgMCAwLTIgMnYxNmEyIDIgMCAwIDAgMiAyaDEyYTIgMiAwIDAgMCAyLTJWOGwxLTZ6Ii8+PHBhdGggZD0iTTE0IDJWMjZoMmwxLTYiLz48L3N2Zz4=';
+
+const shortenFilename = (name, maxLength = 20) => {
+  if (name.length <= maxLength) {
+    return name;
+  }
+  const start = name.substring(0, maxLength / 2 - 1);
+  const end = name.substring(name.length - maxLength / 2 + 2);
+  return `${start}...${end}`;
+};
 
 function ConversionPage() {
   const location = useLocation();
@@ -12,6 +23,30 @@ function ConversionPage() {
   const [convertedFiles, setConvertedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
   const [isConverting, setIsConverting] = useState(false);
+
+  const contentRef = useRef(null);
+  const [contentHeight, setContentHeight] = useState('auto');
+  const [visibleItems, setVisibleItems] = useState([]);
+
+  useEffect(() => {
+    if (progress === 100 && convertedFiles.length > 0) {
+      convertedFiles.forEach((_, index) => {
+        setTimeout(() => {
+          setVisibleItems((prev) => [...prev, index]);
+        }, index * 100); // Stagger by 100ms
+      });
+    } else if (progress < 100) {
+      setVisibleItems([]); // Reset when not complete
+    }
+  }, [progress, convertedFiles]);
+
+  useEffect(() => {
+    if (progress === 100 && contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight + 'px');
+    } else if (progress < 100) {
+      setContentHeight('auto'); // Reset height when not complete
+    }
+  }, [progress]);
 
   const encodeTga = (imageData) => {
     const { width, height, data } = imageData;
@@ -113,7 +148,7 @@ function ConversionPage() {
         }
       });
     };
-  }, [files, isConverting, convertFiles, convertedFiles]);
+  }, [files, isConverting, convertFiles]);
 
   const handleDownload = async () => {
     const zip = new JSZip();
@@ -127,25 +162,28 @@ function ConversionPage() {
   return (
     <div className="container narrow-container">
       <div className="card">
-        <div className="card-content">
+        <div className={`card-content ${progress === 100 ? 'show-complete' : ''}`}>
           <span className="card-title">Converting Files...</span>
           {isConverting && progress < 100 && (
-            <div>
+            <div className="conversion-progress">
               <div className="progress">
                 <div className="determinate" style={{ width: `${progress}%`, backgroundColor: '#646cff' }}></div>
               </div>
               <span style={{ textAlign: 'center', display: 'block' }}>{`${Math.round(progress)}%`}</span>
+              
             </div>
           )}
           {progress === 100 && (
-            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '200px' }}> {/* Added flex styles */}
+            <div ref={contentRef} className="conversion-complete" style={{ display: 'flex', flexDirection: 'column', maxHeight: contentHeight }}> {/* Added ref and dynamic maxHeight */}
               <p>Conversion complete!</p>
               <ul className="collection" style={{ flexGrow: 1 }}> {/* Added flexGrow to push buttons down */}
                 {convertedFiles.map((file, index) => (
-                  <li key={index} className="collection-item">
+                  <li key={index} className={`collection-item ${visibleItems.includes(index) ? 'fade-in' : ''}`}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <img src={file.thumbnail} alt={file.name} style={{ width: '50px', height: '50px', marginRight: '10px' }} />
-                      {file.name}
+                      <div style={{ width: '50px', height: '50px', marginRight: '10px', backgroundColor: 'black', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={file.thumbnail} alt={file.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                      </div>
+                      {shortenFilename(file.name)}
                       <a href="#!" className="secondary-content" onClick={() => saveAs(file.blob, file.name)}>
                         <i className="material-icons">file_download</i>
                       </a>
@@ -155,7 +193,6 @@ function ConversionPage() {
               </ul>
               <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}> {/* Pushes buttons to the bottom and adds spacing */}
                 <button className="btn waves-effect waves-light" onClick={handleDownload} disabled={convertedFiles.length === 0} style={{ width: '100%', backgroundColor: '#2196F3' }}>
-                  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTYgMGgtMTBsLTYgNnYxNmw2IDZoMTBsNi02di0xNmwtNi02em0tMiAyaDJ2MmgtMnYtMnptLTQgMmgydjJoLTJ2LTJ6bS00IDJoMnYyaC0ydi0yem0xMCAwaDJ2MmgtMnYtMnptLTIgMTZoLTggdi0yaDh2MnptNCAwaC0yem0wIDBoMnYtMmgtMnYyem0wLTJoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wLTRoLTJ2LTJoMnYyem0wIDBoLTJ6bS0xNC0xNGgtMnYtMmgydjJ6bS0yIDBoMnYtMmgtMnYyem0wIDJoMnYtMmgtMnYyem0wIDRoMnYtMmgtMnYyem0wIDRoMnYtMmgtMnYyem0wIDBoMnptMTYtMTBoLTJ2LTJoMnYyem0wIDRoLTJ2LTJoMnYyem0wIDRoLTJ2LTJoMnYyem0wIDRoLTJ2LTJoMnYyem0wIDBoLTJ6bS0xMi04aC0ydjJoMnYtMnptNCAwaC0ydjJoMnYtMnptNCAwaC0ydjJoMnYtMnoiLz48L3N2Zz4=" alt="zip icon" style={{ width: '24px', height: '24px', marginRight: '10px', fill: 'white' }} />
                   Download All as ZIP
                 </button>
                 <button className="btn waves-effect waves-light" onClick={() => navigate('/')} style={{ width: '100%', paddingTop: '30px', paddingBottom: '30px' }}>

@@ -10,6 +10,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "file-saver": "^2.0.5",
+    "framer-motion": "^11.3.2",
     "jszip": "^3.10.1",
     "materialize-css": "^1.0.0",
     "react": "^19.1.1",
@@ -19,7 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start --port 3001",
+    "start": "cross-env PUBLIC_URL='' react-scripts start --port 3001",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

@@ -6,7 +6,7 @@ import logo from './convertly.png';
 console.log('Logo imported:', logo);
 
 function Header() {
-  useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
@@ -19,6 +19,16 @@ function Header() {
         <div className="header-content">
           <div onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
             <img src={logo} alt="Convertly Logo" className="logo" />
+          </div>
+          <div className="switch-wrapper">
+            <div className="switch">
+              <label>
+                Light
+                <input type="checkbox" onChange={toggleTheme} checked={theme === 'dark'} />
+                <span className="lever"></span>
+                Dark
+              </label>
+            </div>
           </div>
         </div>
       </div>
