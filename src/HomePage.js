@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { decodeTga } from '@lunapaint/tga-codec';
 
 import { ReactComponent as TrashIcon } from './trash-icon.svg';
 
@@ -14,23 +15,44 @@ function HomePage() {
   const readAndPreview = (files) => {
     const newPreviews = [];
     const newFiles = [];
-    let filesToProcess = files.length;
 
     files.forEach(file => {
-      if (file.type.startsWith('image/')) {
+      const id = Date.now() + Math.random();
+      if (file.name.endsWith('.tga') || file.type === 'image/tga') {
         const reader = new FileReader();
-        const id = Date.now() + Math.random();
+        reader.onload = async (e) => {
+          try {
+            const decoded = await decodeTga(new Uint8Array(e.target.result));
+            const canvas = document.createElement('canvas');
+            canvas.width = decoded.image.width;
+            canvas.height = decoded.image.height;
+            const ctx = canvas.getContext('2d');
+            const imageData = new ImageData(new Uint8ClampedArray(decoded.image.data), decoded.image.width, decoded.image.height);
+            ctx.putImageData(imageData, 0, 0);
+            newPreviews.push({ id, src: canvas.toDataURL() });
+            newFiles.push({ id, file: new File([await (await fetch(canvas.toDataURL())).blob()], file.name, {type: 'image/png'}) });
+            if (newPreviews.length === files.length) {
+              setImagePreviews(prev => [...prev, ...newPreviews]);
+              setSelectedFiles(prev => [...prev, ...newFiles]);
+            }
+          } catch (error) {
+            console.error('Error decoding TGA:', error);
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      } else if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
         reader.onload = (e) => {
           newPreviews.push({ id, src: e.target.result });
           newFiles.push({ id, file });
-          if (newPreviews.length === filesToProcess) {
+          if (newPreviews.length === files.length) {
             setImagePreviews(prev => [...prev, ...newPreviews]);
             setSelectedFiles(prev => [...prev, ...newFiles]);
           }
         };
         reader.readAsDataURL(file);
       } else {
-        filesToProcess--;
+        // handle non-image files if needed
       }
     });
   };
@@ -81,7 +103,7 @@ function HomePage() {
     setOutputFormat(format);
   };
 
-  const formats = ['png', 'jpeg', 'webp', 'avif', 'bmp', 'gif'];
+  const formats = ['png', 'jpeg', 'webp', 'avif', 'bmp', 'gif', 'tga'];
 
   return (
     <div className="container narrow-container">
@@ -103,6 +125,7 @@ function HomePage() {
               onChange={handleFileChange}
               ref={fileInputRef}
               style={{ display: 'none' }} // Hide the input
+              accept="image/*,.tga"
             />
           </div>
 
